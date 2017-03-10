@@ -1,12 +1,11 @@
 //
-// Created by 和泉田 領一 on 2017/03/09.
+// Created by Ryoichi Izumita on 2017/03/09.
 //
 
 import Foundation
 import Result
 
-public class Observer<T, E:Error>: ObserverProtocol {
-
+public class Observer<T, E:Error> {
     internal var result: Result<T, E>? {
         didSet {
             notify()
@@ -30,6 +29,10 @@ public class Observer<T, E:Error>: ObserverProtocol {
             notify()
         }
     }
+
+}
+
+extension Observer: ObserverProtocol {
 
     public func send(value: T) {
         result = .success(value)

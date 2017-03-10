@@ -1,12 +1,27 @@
+import Foundation
 import Result
 
-public struct Future<T, E:Error> {
+public protocol FutureProtocol {
+    associatedtype Value
+    associatedtype Failed: Error
 
-    let observer: Observer<T, E>
+    @discardableResult func onCompleted(_ completed: @escaping (Result<Value, Failed>) -> ()) -> Future<Value, Failed>
 
-    public init(_ observe: (Observer<T, E>) -> ()) {
-        self.observer = Observer()
-        observe(observer)
+    @discardableResult func onSuccess(_ success: @escaping (Value) -> ()) -> Future<Value, Failed>
+
+    @discardableResult func onFailure(_ failure: @escaping (Failed) -> ()) -> Future<Value, Failed>
+}
+
+public struct Future<T, E:Error>: FutureProtocol {
+
+    public typealias Value = T
+    public typealias Failed = E
+
+    let observer: Observer<Value, Failed>
+
+    public init(_ observe: (Observer<Value, Failed>) -> ()) {
+        self.observer = Observer<Value, Failed>()
+        observe(self.observer)
     }
 
     @discardableResult public func onCompleted(_ completed: @escaping (Result<T, E>) -> ()) -> Future<T, E> {
