@@ -12,18 +12,21 @@ class AwaitTests: XCTestCase {
 
     func testAwaitOneFuture() {
         let future = Future<String, NoError> { observer in
-            DispatchQueue.global().asyncAfter(deadline: .now()) {
+            DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
                 observer.send(value: "test")
             }
         }
 
         let value = try! Await.result(future, timeout: 2.0)
         XCTAssertEqual("test", value)
+
+        let valueAgain = try! Await.result(future, timeout: 2.0)
+        XCTAssertEqual("test", valueAgain)
     }
 
     func testAwaitOneFutureWithFailed() {
         let future = Future<String, TestingError> { observer in
-            DispatchQueue.global().asyncAfter(deadline: .now()) {
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
                 observer.send(failed: .failed)
             }
         }
@@ -31,13 +34,10 @@ class AwaitTests: XCTestCase {
         do {
             try Await.result(future, timeout: 1.0)
             XCTFail()
+        } catch let error as TestingError {
+            XCTAssertEqual(TestingError.failed, error)
         } catch let error as SwiftFutureError {
-            switch error {
-            case .future(let e as TestingError):
-                XCTAssertEqual(TestingError.failed, e)
-            default:
-                XCTFail()
-            }
+            XCTFail()
         } catch {
             XCTFail()
         }
@@ -55,7 +55,7 @@ class AwaitTests: XCTestCase {
             XCTFail()
         } catch let error as SwiftFutureError {
             switch error {
-            case .timeout:
+            case .timedOut:
                 XCTAssertTrue(true)
             default:
                 XCTFail()

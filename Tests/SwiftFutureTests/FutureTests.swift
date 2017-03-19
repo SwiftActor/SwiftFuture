@@ -61,6 +61,24 @@ class FutureTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testMap() {
+        let exp = expectation(description: "testMap")
+
+        let future = Future<Int, TestingError> { observer in
+            DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
+                observer.send(value: 1)
+            }
+        }
+
+        let mappedFuture = future.map { num in String(num) }
+                                 .onSuccess { value in
+                                     XCTAssertEqual("1", value)
+                                     exp.fulfill()
+                                 }
+
+        waitForExpectations(timeout: 2.0)
+    }
+
     static var allTests: [(String, (FutureTests) -> () throws -> Void)] {
         return [
             ("testOnComplete", testOnComplete),

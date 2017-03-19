@@ -11,6 +11,7 @@
 		CB87639D8455CA17463E50D9 /* SwiftFutureError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876EA6904F36B01425ECEA /* SwiftFutureError.swift */; };
 		CB8764A1ED79F6CF5CC60402 /* ObserverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876C71243AD6A1BBA5C772 /* ObserverProtocol.swift */; };
 		CB87667584EDADDF158E5B4B /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8765E14C9ECF4E723E20F2 /* Observer.swift */; };
+		CB87675EE64CA02AAACE64BE /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876E9239D008CEC5554E2A /* ObserverTests.swift */; };
 		CB876BBCA4246883B0EB7E6C /* AwaitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87686140FE39EBA9749EA9 /* AwaitTests.swift */; };
 		OBJ_25 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Result.swift */; };
 		OBJ_26 /* ResultProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* ResultProtocol.swift */; };
@@ -46,10 +47,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6AD875421E7E0FA600289F9A /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		CB8765E14C9ECF4E723E20F2 /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		CB87686140FE39EBA9749EA9 /* AwaitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwaitTests.swift; sourceTree = "<group>"; };
 		CB8769315204FBEB64B50508 /* Await.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Await.swift; sourceTree = "<group>"; };
 		CB876C71243AD6A1BBA5C772 /* ObserverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverProtocol.swift; sourceTree = "<group>"; };
+		CB876E9239D008CEC5554E2A /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
 		CB876EA6904F36B01425ECEA /* SwiftFutureError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftFutureError.swift; sourceTree = "<group>"; };
 		OBJ_10 /* ResultProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultProtocol.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
@@ -115,6 +118,7 @@
 			children = (
 				OBJ_15 /* FutureTests.swift */,
 				CB87686140FE39EBA9749EA9 /* AwaitTests.swift */,
+				CB876E9239D008CEC5554E2A /* ObserverTests.swift */,
 			);
 			name = SwiftFutureTests;
 			path = Tests/SwiftFutureTests;
@@ -130,15 +134,15 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				6AD875421E7E0FA600289F9A /* Playground.playground */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_13 /* Tests */,
 				OBJ_16 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -229,7 +233,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_16 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -269,6 +273,7 @@
 			files = (
 				OBJ_42 /* FutureTests.swift in Sources */,
 				CB876BBCA4246883B0EB7E6C /* AwaitTests.swift in Sources */,
+				CB87675EE64CA02AAACE64BE /* ObserverTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

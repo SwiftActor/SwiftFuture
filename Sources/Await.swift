@@ -4,58 +4,31 @@
 
 import Foundation
 import Dispatch
+import Result
 
-public enum Await<F:FutureProtocol> {
-    case waiting
-    case observed(F.Value)
-    case failed(Error)
+public struct Await<FutureType:FutureProtocol> {
 
-    public static func result(_ future: F, timeout: TimeInterval) throws -> F.Value {
-        var state    = Await<F>.waiting
-        let setState = set(state)
-
+    public static func result(_ future: FutureType, timeout: TimeInterval) throws -> FutureType.Value {
+        var result:   Result<FutureType.Value, FutureType.Failed>?
         let group = DispatchGroup()
         group.enter()
-
-        future.onCompleted { result in
-            switch result {
-            case .success(let value):
-                state = setState(.observed(value))
-            case .failure(let error):
-                state = setState(.failed(error))
-            }
+        future.onCompleted { completedResult in
+            result = completedResult
             group.leave()
         }
 
-        _ = group.wait(timeout: .now() + timeout)
-
-        if case let .observed(value) = state {
-            return value
-        } else if case let .failed(error) = state {
-            throw SwiftFutureError.future(error)
-        } else {
-            throw SwiftFutureError.timeout
-        }
-    }
-
-    fileprivate static func set(_ initialState: Await<F>) -> (Await<F>) -> Await<F> {
-        var state = initialState
-        var dirty = false
-        let queue = DispatchQueue.global()
-
-        return { newState in
-            queue.sync {
-                if dirty == false {
-                    state = newState
-                }
-
-                switch state {
-                case .observed(_), .failed(_):
-                    dirty = true
-                default: ()
-                }
-                return state
+        switch group.wait(timeout: .now() + timeout) {
+        case .success:
+            switch result {
+            case .success(let value)?:
+                return value
+            case .failure(let error)?:
+                throw error
+            default:
+                throw SwiftFutureError.unknown
             }
+        case .timedOut:
+            throw SwiftFutureError.timedOut
         }
     }
 

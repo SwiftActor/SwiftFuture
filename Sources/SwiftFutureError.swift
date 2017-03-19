@@ -5,6 +5,6 @@
 import Foundation
 
 enum SwiftFutureError: Error {
-    case timeout
-    case future(Error)
+    case timedOut
+    case unknown
 }
